@@ -15,6 +15,7 @@ contract Election{
 
     // boolean mapping to keep track of voters that have already voted
     mapping(address => bool) public voters;
+   
     // number of candidates
     uint public candidatesCount;
 
@@ -25,6 +26,11 @@ contract Election{
         addCandidate("Heisenberg");
     }
     
+    // event indicating completion of voting
+    event votedEvent (
+        uint indexed _candidateId
+    );
+
     // function to add candidates
     function addCandidate(string memory _name) private {
         candidatesCount++;
@@ -45,5 +51,9 @@ contract Election{
 
         // increment the vote count for the candidate
         candidates[_candidateId].voteCount++;
+
+        // trigger voted event
+        emit votedEvent(_candidateId);
+
     }
 }
